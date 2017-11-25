@@ -1,0 +1,35 @@
+.DS_Store
+
+# Eclipse
+.classpath
+.project
+.settings/
+scm-source.json
+api/deploy.py
+api/config.json
+*.log
+# Intellij
+.idea/
+*.iml
+*.iws
+atlassian-ide-plugin.xml
+solr-webapp/overlays
+
+# Mac
+.DS_Store
+
+# Maven
+log/
+target/
+
+# Netbeans
+nbproject/
+nbactions.xml
+nb-configuration.xml
+
+
+WeatherServiceApp/node_modules
+WeatherServiceApp/dist
+WeatherServiceApp/.tmp
+WeatherServiceApp/.sass-cache
+WeatherServiceApp/bower_components
