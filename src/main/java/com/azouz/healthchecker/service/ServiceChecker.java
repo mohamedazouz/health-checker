@@ -28,18 +28,21 @@ public class ServiceChecker {
     this.timeout = timeout;
     this.circuitBreaker = circuitBreaker;
     this.name = name;
+    circuitBreakerListeners();
   }
 
-  private void executeWithCircuitBreaker(final Callable<Void> callable)
-      throws RuntimeException {
-    Failsafe.with(circuitBreaker)
-        .run(() -> {
-          callable.call();
-        });
+  private void executeWithCircuitBreaker(final Callable<Void> callable) {
+    try{
+      Failsafe.with(circuitBreaker)
+          .run(() -> {
+            callable.call();
+          });
+    }catch (final RuntimeException ex) {
+      LOG.error(MessageFormat.format("failure call Service:{0}", name));
+    }
   }
 
   public void check() {
-    LOG.trace(MessageFormat.format("trying to hit Service:{0}", name));
     executeWithCircuitBreaker(() -> {
       hitService();
       return null;
@@ -63,7 +66,5 @@ public class ServiceChecker {
     if (urlConn.getResponseCode() != 200) {
       throw new RuntimeException("Failed to get response");
     }
-
-    LOG.trace(MessageFormat.format("Service:{0} is up", name));
   }
 }
